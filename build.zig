@@ -36,6 +36,14 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const httpz = b.dependency("httpz", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
+    // the executable from your call to b.addExecutable(...)
+    exe.root_module.addImport("httpz", httpz.module("httpz"));
+
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
     // step when running `zig build`).
